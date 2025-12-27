@@ -1,6 +1,3 @@
-# Identity Anomalous Sign-In Playbook (`playbooks/identity-anomalous-signin/README.md`)
-
-```markdown
 # Identity Anomalous Sign-In Playbook
 
 ## Purpose

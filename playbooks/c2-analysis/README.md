@@ -1,15 +1,13 @@
-# 🧨 Ransomware / Malware Playbook (`playbooks/ransomware-malware/README.md`)
-
-# Ransomware / Malware Playbook
+# C2 Analysis Playbook
 
 ## Purpose
-Distinguish ransomware, pre-encryption activity,
-and non-ransomware malware, and assess residual risk.
+Determine whether observed network activity represents
+automated command-and-control behavior or benign communication.
 
 ## When This Playbook Is Used
-- Malware alerts
-- Ransomware detections
-- Suspicious endpoint activity
+- Possible C2 alerts
+- Repeated outbound connections
+- Threat hunting for beaconing behavior
 
 ## Analysis Flow
 ```mermaid

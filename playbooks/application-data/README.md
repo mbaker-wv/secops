@@ -1,5 +1,3 @@
-# 🗄️ Application / Data Compromise Playbook (`playbooks/application-data/README.md`)
-
 # Application / Data Compromise Playbook
 
 ## Purpose
