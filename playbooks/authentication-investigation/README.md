@@ -2,7 +2,6 @@
 # Suspicious Login Attempts Playbook  
 **Cloud (Entra ID) and On-Prem Active Directory**
 
----
 
 ## Purpose
 
@@ -16,7 +15,6 @@ The goal is to:
 
 This playbook is designed to be **checklist-driven** and usable by Tier-1 and Tier-2 SOC analysts.
 
----
 
 ## Alerts Covered
 
@@ -30,7 +28,6 @@ This playbook applies to alerts related to:
 - Legacy authentication usage
 - On-prem suspicious logon attempts
 
----
 
 ## Investigation Philosophy
 
@@ -41,7 +38,6 @@ This playbook applies to alerts related to:
 - Privilege level drives severity
 - Successful authentication always requires scrutiny
 
----
 
 ## Combined Suspicious Login Flow (Cloud + On-Prem)
 
