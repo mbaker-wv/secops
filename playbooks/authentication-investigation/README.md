@@ -1,33 +1,77 @@
+
+# Suspicious Login Attempts Playbook  
+**Cloud (Entra ID) and On-Prem Active Directory**
+
+---
+
+## Purpose
+
+This playbook provides a **clear, repeatable investigation workflow** for suspicious login attempts observed in cloud and on-prem environments.
+
+The goal is to:
+- Reduce alert fatigue
+- Enable fast, defensible decisions
+- Escalate only when risk is real
+- Treat authentication attempts probabilistically, not emotionally
+
+This playbook is designed to be **checklist-driven** and usable by Tier-1 and Tier-2 SOC analysts.
+
+---
+
+## Alerts Covered
+
+This playbook applies to alerts related to:
+
+- Suspicious sign-in attempts
+- Unusual authentication patterns
+- Risky sign-ins (Entra ID)
+- Excessive login failures
+- Impossible travel
+- Legacy authentication usage
+- On-prem suspicious logon attempts
+
+---
+
+## Investigation Philosophy
+
+> **Authentication attempts are common. Compromise is not.**
+
+- Failed attempts alone do not indicate compromise
+- Security controls blocking access is a success condition
+- Privilege level drives severity
+- Successful authentication always requires scrutiny
+
+---
+
+## Combined Suspicious Login Flow (Cloud + On-Prem)
+
 ```mermaid
 flowchart TD
-    A[Suspicious Login Alert]
+    A[Alert Received]
 
-    A --> B{Login Location}
+    A --> B{Platform}
 
-    %% On-Prem Path
-    B -->|On Prem AD| OP1[Identify Source Device]
-    OP1 --> OP2{Expected System or User}
-    OP2 -->|Yes| OP3[Review Login Pattern]
-    OP3 --> OP4{Anomalous Behavior}
-    OP4 -->|No| OP5[Document and Close]
-    OP4 -->|Yes| OP6[Investigate Further]
+    B -->|Cloud Entra ID| C[Review Sign-In Result]
+    B -->|On-Prem AD| C
 
-    OP2 -->|No| OP6
+    C --> D{Authentication Successful}
 
-    %% Cloud Path
-    B -->|Cloud Entra ID| CL1[Identify User and App]
-    CL1 --> CL2{Known User and App}
-    CL2 -->|Yes| CL3[Review Sign In Risk]
-    CL3 --> CL4{Risk Acceptable}
-    CL4 -->|Yes| CL5[Document and Close]
-    CL4 -->|No| CL6[Investigate Further]
+    %% Failed Only
+    D -->|No| E[Check Account Privilege]
 
-    CL2 -->|No| CL6
+    E -->|High Privilege| ESC[Escalate Incident]
 
-    %% Shared Investigation
-    OP6 --> X[Check Additional Indicators]
-    CL6 --> X
+    E -->|Not Privileged| F[Check Attempt Frequency]
 
-    X --> Y{Credential Abuse Observed}
-    Y -->|No| Z[Monitor and Document]
-    Y -->|Yes| IR[Escalate Incident]
+    F -->|Low Frequency| CLOSE[Close and Monitor]
+    F -->|High Frequency| ESC
+
+    %% Successful Authentication
+    D -->|Yes| G[Check MFA or Context]
+
+    G -->|Expected Context or MFA Used| ESC
+    G -->|No MFA or Unexpected Context| H[Contain Account]
+
+    H --> I[Force Password Reset]
+    I --> J[Revoke Active Sessions]
+    J --> ESC
