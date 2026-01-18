@@ -57,27 +57,23 @@ flowchart TD
 * Path: C:\Windows\System32\services.exe
 * Parent process: wininit.exe
 * User: NT AUTHORITY\SYSTEM
-* One active instance at a time
+* One active Services.exe instance at a time.
 
 ### Indicators Requiring Escalation
 * Non-System32 execution path
 * Unexpected parent process
 * Non-SYSTEM execution context
-* Overlapping services.exe instances
+* Overlapping services.exe instances found
 * Repeated concurrent execution after patching or reboot
 
 ### Common Benign Scenarios
-Sequential service restarts
+* Sequential service restarts
 
-### Normal reboot activity
-* Patch installation with no overlap
-* Single-instance restart after crash
 
 ### High-Risk Scenarios
-* Concurrent instances without maintenance context
-* Concurrency persisting beyond patch window
-* Concurrent execution combined with suspicious child processes
-* Concurrency on high-value servers (DCs, app servers)
+* Concurrent Services.exe's persisting beyond patch window
+* Concurrent Services.exe's combined with suspicious child processes
+* Concurrent Services.exe's on high-value servers (DCs, app servers)
 
 ## KQL Advanced Hunting Query
 ```kql
